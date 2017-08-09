@@ -17,51 +17,128 @@
         <h1>-> [ Soundcloud Followers Util ] <-</h1>
     </div>
     <div class="container">
-        <div class="col-md-12 text-center">
-            <input type="text" ng-model="SCEndpoint" placeholder="SC profile URL..." size="50" class="nice-text-box" />
-         </div>
-
-        <div class="col-md-4"></div>
-        <div class="col-md-4 text-center">
-            <input type="button" class="enjoy-css-B2" value="Get Followers" width="250" ng-click="start()" />
+        <div class="col-md-12 text-center" ng-show="showUrl">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h2>Enter follower API URL</h2>
+                    </div>
+                </div>
+                <br />
+                <input type="text" ng-model="SCEndpoint" placeholder="SC profile URL..." size="50" class="nice-text-box" /><br /><br />{{information}} <br /><br />
+                <input type="button" class="nice-button" value="Get Followers" width="250" ng-click="start()" />  <br /><br />
+                 <input type="button" class="btn btn-primary" value="Help" data-target="#infoModal" data-toggle="modal" />
+                <br /><br />
+            </div>
         </div>
-        <div class="col-md-4"></div>
 
-        <div class="col-md-12">
-            <hr />
-            <h5>Followers: {{followerCount}}</h5>
-            <h5>Info: {{next_href}}</h5>
-            <hr />
-            Order By: 
-            <select ng-model="sortColumn">
-                <option value="id">ID #</option>
-                <option value="username">User Name</option>
-                <option value="city">City</option>
-                <option value="full_name">Full Name</option>
-                <option selected value="followers_count">Followers</option>
-            </select>
-            <table class="table table-hover table-condensed text-center ">
-                <tr>
-                    <th>Avatar</th>
-                    <th ng-click="sortData(id)">ID</th>
-                    <th ng-click="sortData(username)">User Name</th>
-                    <th ng-click="sortData(city)">City</th>
-                    <th ng-click="sortData(full_name)">Name</th>
-                    <th>Perma</th>
-                    <th ng-click="sortData(followers_count)">Followers</th>
-                </tr>
-                <tr ng-repeat="user in followers | orderBy : sortColumn : reverseSort">
-                    <td><img src={{user.avatar_url}}/></td>
-                    <td>{{user.id}}</td>
-                    <td>{{user.username}}</td>
-                    <td>{{user.city}}</td>
-                    <td>{{user.full_name}}</td>
-                    <td><a href="{{user.permalink_url}}"> link </a> </td>
-                    <td>{{user.followers_count}}</td>
-                </tr>
-            </table>
+
+        <div class="col-md-12 text-center" ng-show="showTable">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h2>Followers: {{followerCount}}</h2>
+                    </div>
+                </div>
+                <br />
+                Order By:
+                <select ng-model="sortColumn">
+                    <option value="id">ID #</option>
+                    <option value="username">User Name</option>
+                    <option value="city">City</option>
+                    <option value="full_name">Full Name</option>
+                    <option selected value="followers_count">Followers</option>
+                </select> <br /><br />
+                <table class="table table-hover table-condensed text-center ">
+                    <tr>
+                        <th>Avatar</th>
+                        <th ng-click="sortData(id)">ID</th>
+                        <th ng-click="sortData(username)">User Name</th>
+                        <th ng-click="sortData(city)">City</th>
+                        <th ng-click="sortData(full_name)">Name</th>
+                        <th>Perma</th>
+                        <th ng-click="sortData(followers_count)">Followers</th>
+                    </tr>
+                    <tr ng-repeat="user in followers | orderBy : sortColumn : reverseSort">
+                        <td><img src={{user.avatar_url}} /></td>
+                        <td>{{user.id}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.city}}</td>
+                        <td>{{user.full_name}}</td>
+                        <td><a href="{{user.permalink_url}}"> link </a> </td>
+                        <td class="impt">{{user.followers_count}}</td>
+                    </tr>
+                </table>
+
+            </div>
+            <ul class="pagination pagination-lg">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <!--<ul class="pager">
+            <li class="previous"> <span>&larr; Previous </span></li>
+            <li class="next"> <span>Next &rarr; </span></li>
+        </ul>-->
+
+    </div>
+</body>
+
+<!--=====================================================-->
+<!--             INFO MODAL                       -->
+<!--=====================================================-->
+<div class="modal" id="infoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Help</h1><button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <b>You need to enter a Soundcloud API URL. To get this URL follow these instructions.<br /> </b> Note: This requires you use Chrome. <br />
+                <h2>Step 1 - Goto followers page</h2>
+                Navigate to your followers page (i.e https://soundcloud.com/strider_white/followers)
+                <img src="Img/tut_img_1.jpg" class="img-responsive img-thumbnail" />
+
+                <br /><br /><h2>Step 2 - Dev Console</h2>
+                Open dev console (press F12) and follow these steps <br />
+                <ol>
+                    <li>Press "Network" tab</li>
+                    <li>Press "XHR"</li>
+                    <li>Now within filter type "followers?offset"</li>
+                </ol>
+
+                <img src="Img/tut_img_2.jpg" class="img-responsive img-thumbnail" />
+                <br /><br /><h2>Step 3 - Copy Url</h2>
+                Now refresh the page and copy the first item on the list.<br />
+                <ol>
+                    <li>Right click -> copy -> copy link address</li>
+                </ol>
+
+                <img src="Img/tut_img_3.jpg" class="img-responsive img-thumbnail" />
+                <br /><br /><h2>Step 4 - Modify url</h2>
+                Within the URL change paramater "&limit=12" to "&limit=200" <br />
+                <img src="Img/tut_img_4.jpg" class="img-responsive img-thumbnail" />
+                <br />
+
+                <h1>Thats it! <br />Paste that URL into the box</h1>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
+</div>
 
-</body>
+<!--=====================================================-->
+<!--             END MODAL                       -->
+<!--=====================================================-->
+
+
+
+
 </html>

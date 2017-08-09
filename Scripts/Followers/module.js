@@ -29,7 +29,10 @@ app.controller("followersController", function ($scope, $http, $q, _) {
     $scope.followers = [];
     //Lodash
     $scope._ = _;
-
+    //Show table div
+    $scope.showTable = false;
+    //Show url div
+    $scope.showUrl = true;
     //set up sorting stuff
     $scope.sortColumn = "followers_count"
     $scope.reverseSort = true;
@@ -37,6 +40,8 @@ app.controller("followersController", function ($scope, $http, $q, _) {
         //$scope.reverseSort = ($scope.sortColumn == column) ? !$scope.reverseSort : false;
         $scope.sortColumn = column
     }
+    $scope.information = "waiting...";
+
 
     //end sorting stuff
 
@@ -48,6 +53,18 @@ app.controller("followersController", function ($scope, $http, $q, _) {
     //Get the first set of followers with a promise
     $scope.start = function()
     {
+        //VALIDATE THE URL 
+        //if ($scope.SCEndpoint != somthing)
+        //{
+        //    $scope.information = "URL IS WRONG...";
+        //}
+
+        //Show table
+        $scope.showTable = true;
+        //Hide URL div
+        $scope.showUrl = false;
+
+
         //Make a promise to get data from SC API
         var promise = getFollowers($q, $http, $scope, proxy + $scope.SCEndpoint);
         promise.then((data) => {
