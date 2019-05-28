@@ -1,0 +1,59 @@
+<router-outlet></router-outlet>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>{{title}}</h1>
+    </div>
+  </div>
+
+
+  <form class="form-horizontal">
+    <fieldset>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="scURL">Input Soundcloud URL</label>
+        <div class="col-md-4">
+          <input [(ngModel)]="scURL" id="scURL" name="textinput" type="text"
+            placeholder="URL"
+            class="form-control input-md">
+        </div>
+        https://api-v2.soundcloud.com/users/2751638/followers?offset=1558219030595&limit=12&client_id=btkf2cRquT0ttPmKTPIIZ0o4bgjVAhcT&app_version=1558955000&app_locale=en
+      </div>
+
+
+      <!-- Button -->
+      <div class="form-group">
+        <div class="col-md-4">
+          <button (click)="getFollowers()" id="singlebutton" name="singlebutton" class="btn btn-primary">Go!</button>
+          <button (click)="Stop()" id="singlebutton" name="singlebutton" class="btn btn-danger">Stop!</button>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
+
+  <div class="row">
+    <h1># of followers: {{followers.length}}</h1>
+  </div>
+
+  <div *ngIf="followers" class="row">
+ 
+      <table>
+          <thead>
+            <tr>           
+              <th>Pic</th><th>Username</th> <th>followers count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let follower of followers">   
+              <td><img src={{follower.avatar_url}} /></td> 
+              <td>{{follower.username}}</td> 
+              <td>{{follower.followers_count}}</td> 
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+</div>
